@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Address Book Application</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="addressBook.js"></script>
+<script src="addressBookService.js"></script>
+</head>
+<body ng-app="addrBook" ng-controller="myCtrl">
+          <div>
+          
+          <form name="newAddress" novalidate>
+                    <div class="form-group">
+                              <span>Name</span> <input type="text" class="form-control" ng-model="newName" ng-required="true">
+                    </div>
+                    <div class="form-group">
+                              <span>Phone</span> <input type="text" class="form-control" ng-model="newPhone" ng-pattern="phonePattern" ng-required="true">
+                    </div>
+                    <div class="form-group">
+                              <span>Email</span> <input name="email" type="text" class="form-control" ng-model="newEmail" ng-pattern="emailPattern" ng-required="true"> 
+                    </div>
+                    <div ng-model="id"></div>
+                    <div ng-model="rev"></div>
+                    <div ng-model="myUpdateSwitch" ng-init="myUpdateSwitch=true"></div>
+                    <div ng-model="myAddSwitch" ng-init="myAddSwitch=false"></div>
+                    <input type="button" class="btn btn-primary btn-sm" value="Submit" ng-click="addItem()" ng-hide="myAddSwitch"  ng-disabled="newAddress.$invalid"> 
+                    <input type="button" class="btn btn-primary btn-sm" value="update" ng-click="updateItem(key, value._id, value._rev)"
+                              ng-hide="myUpdateSwitch"  ng-disabled="newAddress.$invalid">
+                              <div ng-model="error" ng-hide="errorSwitch" ng-init="errorSwitch=true">{{error}}</div>
+          </form>
+
+          </div>
+          <div>
+                    <h1 class="text-center">ADDRESS BOOK</h1>
+          </div>
+          <div>
+                    <p>
+                              <input type="text" ng-model="search" placeholder="Search Address">
+                    </p>
+          </div>
+          <div class="table-responsive">
+                    <table class="table table-striped">
+                              <tr>
+                                        <th>Number</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Remove/Edit</th>
+                              </tr>
+                              <tr ng-repeat="(key, value) in info| filter:search ">
+                                        <td>{{key}}</td>
+                                        <td>{{value.Name}}</td>
+                                        <td>{{value.Contact}}</td>
+                                        <td>{{value.Email}}</td>
+                                        <td><a href="#" ng-click="removeAddress(value._id, value._rev)"><span
+                                                            class="glyphicon glyphicon-trash"
+                                                  ></span>&nbsp;</a>/ <a href="#" ng-click="editAddress(key, value._id, value._rev)"> <span
+                                                            class="glyphicon glyphicon-edit"
+                                                  ></span>
+                                        </a></td>
+                              </tr>
+                    </table>
+          </div>
+</body>
+</html>
